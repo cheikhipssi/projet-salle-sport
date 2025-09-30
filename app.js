@@ -93,8 +93,8 @@ app.delete("/reservations/:id", async (req, res) => {
 });
 
 // Démarrage
-app.listen(PORT, () => {
-  console.log(`Serveur lancé sur http://localhost:${PORT}`);
+app.listen(PORT,'0.0.0.0', () => {
+  console.log(`Serveur lancé sur http://0.0.0.0:${PORT}`);
 });
 
 

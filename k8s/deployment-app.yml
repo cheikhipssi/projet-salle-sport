@@ -4,7 +4,7 @@ metadata:
   name: reservation-app
   namespace: reservation-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: reservation-app
@@ -18,7 +18,7 @@ spec:
           image: default-route-openshift-image-registry.apps-crc.testing/reservation-app/reservation-app
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 3000
           env:
             - name: MYSQL_HOST
               value: "mysql"

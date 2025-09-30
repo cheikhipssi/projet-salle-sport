@@ -18,5 +18,6 @@ deploy:
       - k8s/service-app.yml
       - k8s/service-mysql.yml
       - k8s/ingress.yml
+      - k8s/route-reservation-app.yml
     
 

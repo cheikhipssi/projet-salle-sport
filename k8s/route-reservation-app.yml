@@ -1,0 +1,12 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: reservation-app
+spec:
+  to:
+    kind: Service
+    name: reservation-service
+  port:
+    targetPort: 80
+  
+

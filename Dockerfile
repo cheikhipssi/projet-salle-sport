@@ -16,8 +16,8 @@ USER 1001
 COPY . .
 
 # Exposer le port
-EXPOSE 8080
+EXPOSE 3000
 
 # Commande de démarrage
-CMD ["node", "app.js"]
+CMD ["npm", "start"]
 
