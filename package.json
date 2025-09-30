@@ -1,0 +1,15 @@
+{
+  "name": "reservation-salles",
+  "version": "1.0.0",
+  "description": "Application de réservation de salles",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "body-parser": "^1.20.2",
+    "mysql2": "^3.4.0"
+  }
+}
+

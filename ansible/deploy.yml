@@ -1,0 +1,19 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: Copier l'application
+      copy:
+        src: ../
+        dest: /opt/reservation
+    - name: Installer Node.js et npm
+      package:
+        name: nodejs
+        state: present
+    - name: Installer dépendances npm
+      command: npm install
+      args:
+        chdir: /opt/reservation
+    - name: Démarrer l'application
+      shell: "nohup npm start &"
+      args:
+        chdir: /opt/reservation

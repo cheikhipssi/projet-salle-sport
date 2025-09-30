@@ -1,0 +1,22 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: reservation-app
+build:
+  artifacts:
+    - image: default-route-openshift-image-registry.apps-crc.testing/reservation-app/reservation-app
+      context:
+      docker:
+        dockerfile: Dockerfile
+  local:
+    push: true   # si tu utilises OpenShift/Minikube/CRC en local
+deploy:
+  kubectl:
+    manifests:
+      - k8s/deployment-app.yml
+      - k8s/statefulset-mysql.yml
+      - k8s/service-app.yml
+      - k8s/service-mysql.yml
+      - k8s/ingress.yml
+    
+
