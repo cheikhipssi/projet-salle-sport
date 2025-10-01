@@ -7,6 +7,6 @@ spec:
     kind: Service
     name: reservation-app
   port:
-    targetPort: 80
+    targetPort: 8080
   
 

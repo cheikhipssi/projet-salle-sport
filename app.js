@@ -4,7 +4,7 @@ const mysql = require("mysql2/promise");
 const path = require("path");
 
 const app = express();
-const PORT = 3000;
+const PORT = 8080;
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));

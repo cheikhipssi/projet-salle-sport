@@ -16,7 +16,7 @@ USER 1001
 COPY . .
 
 # Exposer le port
-EXPOSE 3000
+EXPOSE 8080
 
 # Commande de démarrage
 CMD ["npm", "start"]

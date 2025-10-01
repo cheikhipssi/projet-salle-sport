@@ -1,0 +1,63 @@
+# k8s/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reservation-app
+  labels:
+    app: reservation-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reservation-app
+  template:
+    metadata:
+      labels:
+        app: reservation-app
+    spec:
+      containers:
+        - name: reservation-app
+          image: default-route-openshift-image-registry.apps-crc.testing/reservation-app/reservation-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DB_HOST
+              value: mysql
+            - name: DB_USER
+              value: user
+            - name: DB_PASSWORD
+              value: userpassword
+            - name: DB_NAME
+              value: reservation
+
+---
+# k8s/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: reservation-app
+  labels:
+    app: reservation-app
+spec:
+  selector:
+    app: reservation-app
+  ports:
+    - name: http
+      port: 80          # port exposé dans le cluster / service
+      targetPort: 3000  # port Node.js dans le pod
+
+---
+# k8s/route.yaml
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: reservation-app
+spec:
+  to:
+    kind: Service
+    name: reservation-app
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+
