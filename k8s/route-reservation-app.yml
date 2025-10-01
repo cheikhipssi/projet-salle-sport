@@ -5,7 +5,7 @@ metadata:
 spec:
   to:
     kind: Service
-    name: reservation-service
+    name: reservation-app
   port:
     targetPort: 80
   
