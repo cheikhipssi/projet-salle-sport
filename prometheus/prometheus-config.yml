@@ -14,6 +14,9 @@ data:
           - targets: ["localhost:9090"]
  
       - job_name: "reservation-app"
-        metrics_path: /metrics
         static_configs:
           - targets: ["reservation-app:8080"]
+
+      - job_name: "mysql"
+        static_configs:
+          - targets: ["mysqld-exporter:9104"]
