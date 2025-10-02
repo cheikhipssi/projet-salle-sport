@@ -1,0 +1,15 @@
+# --- Service pour exposer les métriques de l'application existante ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: reservation-app-metrics
+  namespace: reservation-app
+spec:
+  selector:
+    app: reservation-app
+  ports:
+    - name: metrics
+      port: 9100
+      targetPort: 9100
+
+

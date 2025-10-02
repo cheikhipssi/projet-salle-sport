@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  namespace: reservation-app
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+ 
+    scrape_configs:
+      - job_name: "prometheus"
+        static_configs:
+          - targets: ["localhost:9090"]
+ 
+      - job_name: "reservation-app"
+        metrics_path: /metrics
+        static_configs:
+          - targets: ["reservation-app:8080"]

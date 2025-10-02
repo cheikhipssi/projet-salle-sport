@@ -2,14 +2,40 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mysql = require("mysql2/promise");
 const path = require("path");
+const client = require("prom-client");
 
 const app = express();
 const PORT = 8080;
 
+//--- Prometheus Metrics ---
+const collectDefaultMetrics = client.collectDefaultMetrics;
+collectDefaultMetrics();
+
+const httpRequestDurationMicroseconds = new client.Histogram({
+  name: "http_request_duration_seconds",
+  help: "Durée des requêtes HTTP en secondes",
+  labelNames: ["method", "route", "status_code"],
+  buckets: [0.1, 0.3, 0.5, 1, 1.5, 2, 5],
+});
+
+app.use((req, res, next) => {
+  const end = httpRequestDurationMicroseconds.startTimer();
+  res.on("finish", () => {
+    end({ method: req.method, route: req.path, status_code: res.statusCode });
+  });
+  next();
+});
+
+// Endpoint /metrics exposé
+app.get("/metrics", async (req, res) => {
+  res.set("Content-Type", client.register.contentType);
+  res.end(await client.register.metrics());
+});
+
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-// --- Connexion MySQL ---
+/// --- Connexion MySQL ---
 let connection;
 async function initDB() {
   connection = await mysql.createConnection({
@@ -96,5 +122,4 @@ app.delete("/reservations/:id", async (req, res) => {
 app.listen(PORT,'0.0.0.0', () => {
   console.log(`Serveur lancé sur http://0.0.0.0:${PORT}`);
 });
-
 
